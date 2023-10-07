@@ -1,26 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnew.c                                        :+:      :+:    :+:   */
+/*   fractol.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yushsato <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: yushsato <yushsato@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/10 16:37:02 by yushsato          #+#    #+#             */
-/*   Updated: 2023/06/10 17:12:49 by yushsato         ###   ########.fr       */
+/*   Created: 2023/10/07 19:43:07 by yushsato          #+#    #+#             */
+/*   Updated: 2023/10/07 20:27:16 by yushsato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include "libft.h"
+#ifndef FRACTOL_H
+# define FRACTOL_H
 
-t_list	*ft_lstnew(void *content)
+# include "lib/libft/libft.h"
+# include "lib/minilibx_opengl/mlx.h"
+
+typedef struct s_complex
 {
-	t_list	*ret;
+	int	real;
+	int	imag;
+}	t_complex;
 
-	ret = malloc(sizeof(t_list));
-	if (!ret)
-		return (NULL);
-	(*ret).content = content;
-	(*ret).next = NULL;
-	return (ret);
-}
+#endif
