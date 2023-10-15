@@ -6,15 +6,16 @@
 /*   By: yushsato <yushsato@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 19:43:07 by yushsato          #+#    #+#             */
-/*   Updated: 2023/10/07 21:40:56 by yushsato         ###   ########.fr       */
+/*   Updated: 2023/10/15 18:10:11 by yushsato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FRACTOL_H
 # define FRACTOL_H
 
-# include "lib/libft/libft.h"
 # include "lib/minilibx_opengl/mlx.h"
+# include "lib/libft/libft.h"
+# include "lib/ft_printf/ft_printf.h"
 
 typedef struct s_complex
 {

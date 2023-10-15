@@ -6,7 +6,7 @@
 #    By: yushsato <yushsato@student.42tokyo.jp>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/07 10:00:38 by yushsato          #+#    #+#              #
-#    Updated: 2023/10/07 20:45:49 by yushsato         ###   ########.fr        #
+#    Updated: 2023/10/15 18:08:11 by yushsato         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,13 +18,14 @@ OBJS	= $(SRCS:.c=.o)
 INCLUDE	= -I. -I./lib/libft -I./lib/minilibx_opengl
 LIBMLX	= libmlx.a
 LIBFT	= libft.a
+PRINTF	= ftprintf.a
 
 all: $(NAME)
 
 %.o: %.c
 	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
 
-$(NAME): $(OBJS) $(LIBMLX) $(LIBFT)
+$(NAME): $(OBJS) $(LIBMLX) $(LIBFT) $(PRINTF)
 	$(CC) $(CFLAGS) $^ $(INCLUDE) -framework OpenGL -framework AppKit -o $@
 
 $(LIBMLX):
@@ -41,8 +42,15 @@ $(LIBFT):
 	cp $@ ../../; \
 	make fclean;
 
+$(PRINTF):
+	cd lib; \
+	cd ft_printf; \
+	make all; \
+	cp $@ ../../; \
+	make fclean;
+
 clean:
-	rm -f $(OBJS) $(LIBMLX) $(LIBFT)
+	rm -f $(OBJS) $(LIBMLX) $(LIBFT) $(PRINTF)
 
 fclean: clean
 	rm -f $(NAME)
