@@ -6,14 +6,16 @@
 #    By: yushsato <yushsato@student.42tokyo.jp>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/07 10:00:38 by yushsato          #+#    #+#              #
-#    Updated: 2023/10/15 22:22:04 by yushsato         ###   ########.fr        #
+#    Updated: 2023/10/15 22:29:28 by yushsato         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= fractol
 CC		= cc
 CFLAGS	= -Wall -Wextra -Werror
-SRCS	= main.c
+SRCS	= main.c \
+		  fr_mandelbrot.c \
+		  fr_julia.c
 OBJS	= $(SRCS:.c=.o)
 INCLUDE	= -I. -I./lib/libft -I./lib/minilibx_opengl
 LIBMLX	= libmlx.a
