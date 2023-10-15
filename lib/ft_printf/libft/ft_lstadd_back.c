@@ -6,23 +6,23 @@
 /*   By: yushsato <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 15:44:16 by yushsato          #+#    #+#             */
-/*   Updated: 2023/06/13 19:56:34 by yushsato         ###   ########.fr       */
+/*   Updated: 2023/10/15 21:47:39 by yushsato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstadd_back(t_list **lst, t_list *new)
+void	ft_lstadd_back(t_list **lst, t_list *new_list)
 {
 	t_list	*tmp;
 
-	if (!new || !lst)
+	if (!new_list || !lst)
 		;
 	else if (!*lst)
-		*lst = new;
+		*lst = new_list;
 	else
 	{
 		tmp = ft_lstlast(*lst);
-		tmp->next = new;
+		tmp->next = new_list;
 	}
 }
