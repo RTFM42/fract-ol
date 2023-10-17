@@ -6,7 +6,7 @@
 #    By: yushsato <yushsato@student.42tokyo.jp>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/07 10:00:38 by yushsato          #+#    #+#              #
-#    Updated: 2023/10/15 22:40:31 by yushsato         ###   ########.fr        #
+#    Updated: 2023/10/17 15:35:19 by yushsato         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,6 +49,8 @@ fclean: clean
 	rm -f $(NAME)
 
 re: fclean all
+
+build: all clean
 
 norminette:
 	find . -type f -and -name '*.c' | grep -v 'lib/mini' | awk '{system("norminette "$1)}'
