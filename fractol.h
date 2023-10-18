@@ -6,7 +6,7 @@
 /*   By: yushsato <yushsato@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 19:43:07 by yushsato          #+#    #+#             */
-/*   Updated: 2023/10/15 22:28:58 by yushsato         ###   ########.fr       */
+/*   Updated: 2023/10/19 02:44:36 by yushsato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,30 @@
 # include "lib/minilibx_opengl/mlx.h"
 # include "lib/libft/libft.h"
 # include "lib/ft_printf/ft_printf.h"
+# include <stdlib.h>
+# include <math.h>
 
 typedef struct s_complex
 {
-	int	real;
-	int	imag;
+	double	real;
+	double	imag;
 }	t_complex;
 
-t_complex	*complex_add(t_complex self, t_complex other);
-t_complex	*complex_sub(t_complex self, t_complex other);
-t_complex	*complex_mul(t_complex self, t_complex other);
-t_complex	*complex_div(t_complex self, t_complex other);
-void		*fr_mandelbrot();
-void		*fr_julia();
+typedef struct s_data {
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+}	t_data;
+
+typedef struct s_vars {
+	void	*mlx;
+	void	*window;
+}	t_vars;
+
+void	fr_mlx_pixel_put(t_data *img, int x, int y, unsigned int color);
+void	fr_mandelbrot();
+void	fr_julia();
 
 #endif

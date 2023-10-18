@@ -6,41 +6,60 @@
 /*   By: yushsato <yushsato@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 22:29:40 by yushsato          #+#    #+#             */
-/*   Updated: 2023/10/17 15:34:11 by yushsato         ###   ########.fr       */
+/*   Updated: 2023/10/19 02:53:07 by yushsato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lib/minilibx_opengl/mlx.h"
-#include "lib/libft/libft.h"
+#include "fractol.h"
 
-typedef struct	s_data {
-	void	*img;
-	char	*addr;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
-}	t_data;
-
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
+int	on_window_destroy(t_vars *vars)
 {
-	char	*dst;
+	mlx_destroy_window(vars->mlx, vars->window);
+	exit(0);
+}
 
-	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-	*(unsigned int*)dst = color;
+static void	calc_mandelbrot(t_data *img, int size_per, int width, int height)
+{
+	const double	size = 4 * (100 / (double)size_per);
+	int				count[3];
+	double			pos[2];
+	t_complex		c[2];
+
+	count[0] = -1;
+	while (count[0]++ < width - 1)
+	{
+		pos[0] = count[0] * size / width - size / 1.5;
+		count[1] = -1;
+		while (count[1]++ < height - 1)
+		{
+			pos[1] = count[1] * size / height - size / 2;
+			ft_bzero(&c, sizeof(t_complex));
+			count[2] = -1;
+			while (count[2]++ < 200)
+			{
+				c[1].real = pow(c[0].real, 2) - pow(c[0].imag, 2) + pos[0];
+				c[1].imag = c[0].real * c[0].imag * 2 + pos[1];
+				ft_memcpy(&c[0], &c[1], sizeof(t_complex));
+				if (c[0].real * c[0].real + c[0].imag * c[0].imag > 4)
+					fr_mlx_pixel_put(img, count[0], count[1], 0x00FF0000);
+			}
+		}
+	}
 }
 
 void	fr_mandelbrot(void)
 {
-	void	*mlx;
-	void	*mlx_win;
-	t_data	img;
+	t_data		img;
+	t_vars		vars;
 
-	mlx = mlx_init();
-	mlx_win = mlx_new_window(mlx, 1920, 1080, "Hello world!");
-	img.img = mlx_new_image(mlx, 1920, 1080);
+	vars.mlx = mlx_init();
+	vars.window = mlx_new_window(vars.mlx, 1080, 1080, "Hello world!");
+	img.img = mlx_new_image(vars.mlx, 1080, 1080);
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
-								&img.endian);
-	my_mlx_pixel_put(&img, 5, 5, 0x00FF0000);
-	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
-	mlx_loop(mlx);
+			&img.endian);
+	calc_mandelbrot(&img, 200, 1080, 1080);
+	mlx_put_image_to_window(vars.mlx, vars.window, img.img, 0, 0);
+	mlx_hook(vars.window, 17, 1L << 0, on_window_destroy, &vars);
+	mlx_loop(vars.mlx);
+	return ;
 }
