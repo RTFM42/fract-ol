@@ -1,103 +1,84 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/* fr_mandelbrot.c                                    :+:    :+: :+:    :+: :+:    :+: :+:    :+: :+:         */
+/*   fr_mandelbrot.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yushsato <yushsato@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/15 22:29:40 by yushsato          #+#    #+#             */
-/* Updated: 2023/10/23 18:48:07 by yukun         #########  ########   ########   ###    ### ##########.io    */
+/*   Created: 2023/10/23 18:50:40 by yushsato          #+#    #+#             */
+/*   Updated: 2023/10/23 22:01:58 by yushsato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 #include <stdio.h>
 
-int	on_window_destroy(t_vars *vars)
-{
-	mlx_destroy_window(vars->mlx, vars->window);
-	exit(0);
-}
-
-// static void	make_mandelbrot(t_data *img, int size_per, int width, int height)
-// {
-// 	const double	size = 4 * (100 / (double)size_per);
-// 	int				pixel;
-// 	int				count[3];
-// 	double			pos[2];
-// 	t_complex		c[2];
-// 
-// 	count[0] = -1;
-// 	pixel = height;
-// 	if (width < height)
-// 		pixel = width;
-// 	while (count[0]++ < width - 1)
-// 	{
-// 		count[1] = -1;
-// 		while (count[1]++ < height - 1)
-// 		{
-// 			pos[0] = count[0] * size / pixel - size / 2;
-// 			pos[1] = count[1] * size / pixel - size / 2;
-// 			ft_bzero(&c, sizeof(t_complex));
-// 			count[2] = -1;
-// 			while (count[2]++ < 80)
-// 			{
-// 				c[1].real = pow(c[0].real, 2) - pow(c[0].imag, 2) + pos[0];
-// 				c[1].imag = c[0].real * c[0].imag * 2 + pos[1];
-// 				ft_memcpy(&c[0], &c[1], sizeof(t_complex));
-// 				if (c[0].real * c[0].real + c[0].imag * c[0].imag > 4)
-// 					fr_mlx_pixel_put(img, count[0], count[1], count[2]);
-// 			}
-// 		}
-// 	}
-// }
-
-static int	is_mandelbrot(t_complex *com)
+static unsigned int	mandelbrot_color(t_complex *com, int pixel)
 {
 	t_complex	z;
 	int			n;
 
 	ft_bzero(&z, sizeof(t_complex));
 	n = 0;
-	while (n++ < 20)
+	while (z.real * z.real + z.imag * z.imag <= 4 && n < pixel / 4)
 	{
-		if (z.real * z.real + z.imag * z.imag > 4)
-			return (n);
 		complex_mul(&z, &z);
 		complex_add(&z, com);
+		n++;
 	}
-	return (0);
+	if (z.real * z.real + z.imag * z.imag < 4)
+	{
+		if (1 < n)
+			return (0x0);
+		return (0x00FF0000);
+	}
+	return (0x0 + n * 100 * pow(16, 4));
 }
 
-//limits = [xmin, ymin, xmax, ymax]
+/**
+ *
+ * l = [xmin, ymin, xmax, ymax]
+ *
+ */
 
-static void	make_mandelbrot(t_data *img, int width, int height)
+static void	make_mandelbrot(t_data *img, int pixel, double s)
 {
+	const double	l[] = {-2, -2, 2, 2};
+	unsigned int	res;
 	t_complex		p_com;
 	int				p_cnt[2];
-	int				res;
-	int				pixel;
-	const double	limits[] = {-2, -2, 2, 2};
 
 	ft_bzero(&p_com, sizeof(t_complex));
 	p_cnt[0] = 0;
-	pixel = height;
-	if (width < height)
-		pixel = width;
-	while (p_cnt[0] < width)
+	while (p_cnt[0] < pixel)
 	{
 		p_cnt[1] = 0;
-		while(p_cnt[1] < height)
+		while (p_cnt[1] < pixel)
 		{
-			p_com.real = limits[0] + ((limits[2] - limits[0]) / pixel) * p_cnt[0];
-			p_com.imag = limits[1] + ((limits[3] - limits[1]) / pixel) * p_cnt[1];
-			res = is_mandelbrot(&p_com);
-			if (res)
-				fr_mlx_pixel_put(img, p_cnt[0], p_cnt[1], res);
+			p_com.real = l[0] / s + ((l[2] - l[0]) / pixel) * p_cnt[0] / s;
+			p_com.imag = l[1] / s + ((l[3] - l[1]) / pixel) * p_cnt[1] / s;
+			res = mandelbrot_color(&p_com, pixel);
+			fr_mlx_pixel_put(img, p_cnt[0], p_cnt[1], res);
 			p_cnt[1]++;
 		}
 		p_cnt[0]++;
 	}
+}
+
+int	key_hook(int keycode, t_vars *vars)
+{
+	static double	size = 1;
+
+	if (keycode == 4)
+		size += 0.1;
+	else if (keycode == 5)
+		size -= 0.1;
+	else
+		return (0);
+	ft_printf("called\n");
+	make_mandelbrot(vars->img, 500, size);
+	mlx_put_image_to_window(vars->mlx, vars->window, vars->img->img, 0, 0);
+	return (0);
 }
 
 void	fr_mandelbrot(void)
@@ -106,13 +87,15 @@ void	fr_mandelbrot(void)
 	t_vars		vars;
 
 	vars.mlx = mlx_init();
-	vars.window = mlx_new_window(vars.mlx, 600, 400, "Hello world!");
-	img.img = mlx_new_image(vars.mlx, 600, 400);
+	vars.window = mlx_new_window(vars.mlx, 500, 500, "Hello world!");
+	img.img = mlx_new_image(vars.mlx, 500, 500);
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
 			&img.endian);
-	make_mandelbrot(&img, 600, 400);
+	vars.img = &img;
+	make_mandelbrot(&img, 500, 1);
 	mlx_put_image_to_window(vars.mlx, vars.window, img.img, 0, 0);
 	mlx_hook(vars.window, 17, 1L << 0, on_window_destroy, &vars);
+	mlx_key_hook(vars.window, key_hook, &vars);
 	mlx_loop(vars.mlx);
 	return ;
 }
