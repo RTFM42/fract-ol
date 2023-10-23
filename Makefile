@@ -6,7 +6,7 @@
 #    By: yushsato <yushsato@student.42tokyo.jp>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/07 10:00:38 by yushsato          #+#    #+#              #
-#    Updated: 2023/10/19 02:36:34 by yushsato         ###   ########.fr        #
+#    Updated: 2023/10/19 17:49:19 by yushsato         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,7 @@ NAME	= fractol
 CC		= gcc
 CFLAGS	= -Wall -Wextra -Werror -g -fsanitize=address
 SRCS	= main.c \
+		  complex.c \
 		  fr_mandelbrot.c \
 		  fr_julia.c \
 		  fr_mlx.c
