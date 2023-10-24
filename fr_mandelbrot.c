@@ -6,7 +6,7 @@
 /*   By: yushsato <yushsato@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 18:50:40 by yushsato          #+#    #+#             */
-/*   Updated: 2023/10/24 22:26:12 by yushsato         ###   ########.fr       */
+/*   Updated: 2023/10/24 22:47:10 by yushsato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,16 @@ static void	put_mandelbrot(t_vars *vars, double size)
 	mlx_put_image_to_window(vars->mlx, vars->window, vars->img->img, 0, 0);
 }
 
-static int	hook(int key_code, t_vars *vars)
+static int	hook(int key_code, int x ,int y, t_vars *vars)
 {
-	(void)key_code;
-	put_mandelbrot(vars, 1);
+	static int	scale = 1;
+	(void)x;
+	(void)y;
+	if (4 == key_code)
+		scale += 0.1;
+	if (5 == key_code)
+		scale -= 0.1;
+	put_mandelbrot(vars, scale);
 	return (0);
 }
 
