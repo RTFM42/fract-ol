@@ -6,14 +6,14 @@
 /*   By: yushsato <yushsato@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 18:50:40 by yushsato          #+#    #+#             */
-/*   Updated: 2023/10/24 19:12:18 by yushsato         ###   ########.fr       */
+/*   Updated: 2023/10/24 19:14:01 by yushsato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 #include <stdio.h>
 
-int		put_mandelbrot_color(t_complex com, int pixel)
+int	put_mandelbrot_color(t_complex com, int pixel)
 {
 	const int	clutter = 12;
 	t_complex	calc;
@@ -48,7 +48,7 @@ void	put_mandelbrot(t_vars *vars, t_data *img, int pixel, double size)
 			com.imag = (-2.0 + 4.0 / pixel * pos[1]) / size;
 			ft_printf("%d %d\n", com.real, com.imag);
 			color = put_mandelbrot_color(com, pixel);
- 			fr_mlx_pixel_put(img, pos[0], pos[1], color);
+			fr_mlx_pixel_put(img, pos[0], pos[1], color);
 			pos[1]++;
 		}
 		pos[0]++;
