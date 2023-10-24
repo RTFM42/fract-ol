@@ -6,7 +6,7 @@
 /*   By: yushsato <yushsato@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 19:43:07 by yushsato          #+#    #+#             */
-/*   Updated: 2023/10/24 16:40:14 by yushsato         ###   ########.fr       */
+/*   Updated: 2023/10/24 19:39:05 by yushsato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,9 @@ typedef struct s_data {
 typedef struct s_vars {
 	void	*mlx;
 	void	*window;
+	int		pixel;
+	int		size;
+	t_data	*img;
 }	t_vars;
 
 t_complex	*complex_mul(t_complex *dst, t_complex *effect);
