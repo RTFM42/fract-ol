@@ -6,96 +6,68 @@
 /*   By: yushsato <yushsato@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 18:50:40 by yushsato          #+#    #+#             */
-/*   Updated: 2023/10/23 22:01:58 by yushsato         ###   ########.fr       */
+/*   Updated: 2023/10/24 19:12:18 by yushsato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 #include <stdio.h>
 
-static unsigned int	mandelbrot_color(t_complex *com, int pixel)
+int		put_mandelbrot_color(t_complex com, int pixel)
 {
-	t_complex	z;
+	const int	clutter = 12;
+	t_complex	calc;
 	int			n;
 
-	ft_bzero(&z, sizeof(t_complex));
+	ft_bzero(&calc, sizeof(t_complex));
 	n = 0;
-	while (z.real * z.real + z.imag * z.imag <= 4 && n < pixel / 4)
+	while (pow(calc.real, 2) + pow(calc.imag, 2) <= 4 && n < pixel / clutter)
 	{
-		complex_mul(&z, &z);
-		complex_add(&z, com);
+		complex_mul(&calc, &calc);
+		complex_add(&calc, &com);
 		n++;
 	}
-	if (z.real * z.real + z.imag * z.imag < 4)
-	{
-		if (1 < n)
-			return (0x0);
-		return (0x00FF0000);
-	}
-	return (0x0 + n * 100 * pow(16, 4));
+	if (pow(calc.real, 2) + pow(calc.imag, 2) <= 4)
+		return (0x00FFFFFF);
+	return (0x00000000 + ((256 * clutter / pixel) * n * pow(16, 4)));
 }
 
-/**
- *
- * l = [xmin, ymin, xmax, ymax]
- *
- */
-
-static void	make_mandelbrot(t_data *img, int pixel, double s)
+void	put_mandelbrot(t_vars *vars, t_data *img, int pixel, double size)
 {
-	const double	l[] = {-2, -2, 2, 2};
-	unsigned int	res;
-	t_complex		p_com;
-	int				p_cnt[2];
+	t_complex	com;
+	int			pos[2];
+	int			color;
 
-	ft_bzero(&p_com, sizeof(t_complex));
-	p_cnt[0] = 0;
-	while (p_cnt[0] < pixel)
+	pos[0] = 0;
+	while (pos[0] < pixel)
 	{
-		p_cnt[1] = 0;
-		while (p_cnt[1] < pixel)
+		pos[1] = 0;
+		com.real = (-2.0 + 4.0 / pixel * pos[0]) / size;
+		while (pos[1] < pixel)
 		{
-			p_com.real = l[0] / s + ((l[2] - l[0]) / pixel) * p_cnt[0] / s;
-			p_com.imag = l[1] / s + ((l[3] - l[1]) / pixel) * p_cnt[1] / s;
-			res = mandelbrot_color(&p_com, pixel);
-			fr_mlx_pixel_put(img, p_cnt[0], p_cnt[1], res);
-			p_cnt[1]++;
+			com.imag = (-2.0 + 4.0 / pixel * pos[1]) / size;
+			ft_printf("%d %d\n", com.real, com.imag);
+			color = put_mandelbrot_color(com, pixel);
+ 			fr_mlx_pixel_put(img, pos[0], pos[1], color);
+			pos[1]++;
 		}
-		p_cnt[0]++;
+		pos[0]++;
 	}
-}
-
-int	key_hook(int keycode, t_vars *vars)
-{
-	static double	size = 1;
-
-	if (keycode == 4)
-		size += 0.1;
-	else if (keycode == 5)
-		size -= 0.1;
-	else
-		return (0);
-	ft_printf("called\n");
-	make_mandelbrot(vars->img, 500, size);
-	mlx_put_image_to_window(vars->mlx, vars->window, vars->img->img, 0, 0);
-	return (0);
+	mlx_put_image_to_window(vars->mlx, vars->window, img->img, 0, 0);
 }
 
 void	fr_mandelbrot(void)
 {
-	t_data		img;
+	const int	pixel = 500;
 	t_vars		vars;
+	t_data		img;
 
 	vars.mlx = mlx_init();
-	vars.window = mlx_new_window(vars.mlx, 500, 500, "Hello world!");
-	img.img = mlx_new_image(vars.mlx, 500, 500);
+	vars.window = mlx_new_window(vars.mlx, pixel, pixel, "fractol-mandelbrot");
+	img.img = mlx_new_image(vars.mlx, pixel, pixel);
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
 			&img.endian);
-	vars.img = &img;
-	make_mandelbrot(&img, 500, 1);
-	mlx_put_image_to_window(vars.mlx, vars.window, img.img, 0, 0);
-	mlx_hook(vars.window, 17, 1L << 0, on_window_destroy, &vars);
-	mlx_key_hook(vars.window, key_hook, &vars);
+	put_mandelbrot(&vars, &img, pixel, 1);
 	mlx_loop(vars.mlx);
 	return ;
 }
