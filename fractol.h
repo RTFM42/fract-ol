@@ -6,7 +6,7 @@
 /*   By: yushsato <yushsato@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 19:43:07 by yushsato          #+#    #+#             */
-/*   Updated: 2023/10/24 19:39:05 by yushsato         ###   ########.fr       */
+/*   Updated: 2023/10/27 15:48:24 by yushsato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,10 @@ typedef struct s_vars {
 
 t_complex	*complex_mul(t_complex *dst, t_complex *effect);
 t_complex	*complex_add(t_complex *dst, t_complex *effect);
-int			on_window_destroy(t_vars *vars);
 void		fr_mlx_pixel_put(t_data *img, int x, int y, unsigned int color);
 void		fr_mandelbrot(void);
 void		fr_julia(void);
+int			fr_exit_wind(int keycode, t_vars *vars);
+int			fr_exit(int e_code);
 
 #endif

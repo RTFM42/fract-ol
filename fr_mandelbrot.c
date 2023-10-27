@@ -6,14 +6,13 @@
 /*   By: yushsato <yushsato@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 18:50:40 by yushsato          #+#    #+#             */
-/*   Updated: 2023/10/24 22:47:10 by yushsato         ###   ########.fr       */
+/*   Updated: 2023/10/27 15:54:27 by yushsato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 #include <stdio.h>
 
-#define	DEBUG() ft_printf("%d, %s\n", __LINE__, __func__)
 static int	put_mandelbrot_color(t_complex com, int pixel)
 {
 	const int	clutter = 12;
@@ -56,9 +55,10 @@ static void	put_mandelbrot(t_vars *vars, double size)
 	mlx_put_image_to_window(vars->mlx, vars->window, vars->img->img, 0, 0);
 }
 
-static int	hook(int key_code, int x ,int y, t_vars *vars)
+static int	mouse_hook(int key_code, int x, int y, t_vars *vars)
 {
-	static int	scale = 1;
+	static double	scale = 1;
+
 	(void)x;
 	(void)y;
 	if (4 == key_code)
@@ -77,12 +77,15 @@ void	fr_mandelbrot(void)
 	vars.mlx = mlx_init();
 	vars.pixel = 500;
 	vars.img = &img;
-	vars.window = mlx_new_window(vars.mlx, vars.pixel, vars.pixel, "fractol-mandelbrot");
+	vars.window = mlx_new_window(vars.mlx, vars.pixel, vars.pixel,
+			"fractol-mandelbrot");
 	img.img = mlx_new_image(vars.mlx, vars.pixel, vars.pixel);
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
 			&img.endian);
 	put_mandelbrot(&vars, 1);
-	mlx_mouse_hook(vars.window, hook, &vars);
+	mlx_mouse_hook(vars.window, mouse_hook, &vars);
+	mlx_key_hook(vars.window, fr_exit_wind, &vars);
+	mlx_hook(vars.window, 17, 1L << 0, fr_exit, 0);
 	mlx_loop(vars.mlx);
 	return ;
 }
