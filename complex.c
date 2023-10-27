@@ -6,7 +6,7 @@
 /*   By: yushsato <yushsato@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 17:35:35 by yushsato          #+#    #+#             */
-/*   Updated: 2023/10/19 17:47:22 by yushsato         ###   ########.fr       */
+/*   Updated: 2023/10/27 17:53:57 by yushsato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,17 @@ t_complex	*complex_add(t_complex *dst, t_complex *effect)
 	ft_memcpy(&cpy2, effect, sizeof(t_complex));
 	dst->real = cpy1.real + cpy2.real;
 	dst->imag = cpy1.imag + cpy2.imag;
+	return (dst);
+}
+
+t_complex	*complex_sub(t_complex *dst, t_complex *effect)
+{
+	t_complex	cpy1;
+	t_complex	cpy2;
+
+	ft_memcpy(&cpy1, dst, sizeof(t_complex));
+	ft_memcpy(&cpy2, effect, sizeof(t_complex));
+	dst->real = cpy1.real - cpy2.real;
+	dst->imag = cpy1.imag - cpy2.imag;
 	return (dst);
 }
