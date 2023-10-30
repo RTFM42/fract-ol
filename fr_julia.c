@@ -6,7 +6,7 @@
 /*   By: yushsato <yushsato@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 22:29:45 by yushsato          #+#    #+#             */
-/*   Updated: 2023/10/30 18:43:35 by yushsato         ###   ########.fr       */
+/*   Updated: 2023/10/30 18:51:24 by yushsato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 static int	put_color(t_complex com, int pixel)
 {
-	const int	clutter = 5;
+	const int	clutter = 2;
 	t_complex	calc;
 	int			n;
 	int			rgb;
