@@ -6,7 +6,7 @@
 /*   By: yushsato <yushsato@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 18:50:40 by yushsato          #+#    #+#             */
-/*   Updated: 2023/10/27 17:54:59 by yushsato         ###   ########.fr       */
+/*   Updated: 2023/10/30 17:06:01 by yushsato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static int	put_color(t_complex com, int pixel)
 		n++;
 	}
 	if (pow(calc.real, 2) + pow(calc.imag, 2) <= 4)
-		return (0xFFFFFF);
+		return (0x000000);
 	rgb = (256 * clutter / pixel) * n * pixel / clutter / 10;
 	if (rgb > 255)
 		rgb = 255;

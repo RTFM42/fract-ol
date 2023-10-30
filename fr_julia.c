@@ -6,7 +6,7 @@
 /*   By: yushsato <yushsato@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 22:29:45 by yushsato          #+#    #+#             */
-/*   Updated: 2023/10/27 18:27:17 by yushsato         ###   ########.fr       */
+/*   Updated: 2023/10/30 17:28:47 by yushsato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,22 +18,26 @@ static int	put_color(t_complex com, int pixel)
 	const int	clutter = 5;
 	t_complex	calc;
 	int			n;
-	int			rgb_r;
+	int			rgb;
 
 	ft_bzero(&calc, sizeof(t_complex));
 	n = 0;
-	calc.real = -0.185;
-	calc.imag = 1.056;
+	calc.real = 0;
+	calc.imag = 0.8;
 	while (pow(com.real, 2) + pow(com.imag, 2) <= 4 && n < pixel / clutter)
 	{
 		complex_mul(&com, &com);
 		complex_add(&com, &calc);
 		n++;
 	}
-	rgb_r = (256 * clutter / pixel) * n * pixel / clutter;
-	if (rgb_r > 255)
-		return (0xFFFFFF);
-	return (0xFFFFFF - rgb_r);
+	if (n == pixel / clutter)
+		return (0x000000);
+	rgb = (256 * clutter / pixel) * n * pixel / clutter / 10;
+	if (rgb < 256)
+		return (0x000000 + (rgb * pow(16, 4)));
+	if (rgb >= 256 && rgb < 511)
+		return (0xFF0000 + ((rgb - 255) * pow(16, 2)));
+	return (0x000000);
 }
 
 static void	put(t_vars *vars, double size)
