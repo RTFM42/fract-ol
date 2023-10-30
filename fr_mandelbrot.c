@@ -6,7 +6,7 @@
 /*   By: yushsato <yushsato@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 18:50:40 by yushsato          #+#    #+#             */
-/*   Updated: 2023/10/30 17:06:01 by yushsato         ###   ########.fr       */
+/*   Updated: 2023/10/30 18:43:13 by yushsato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,12 @@ static int	put_color(t_complex com, int pixel)
 	}
 	if (pow(calc.real, 2) + pow(calc.imag, 2) <= 4)
 		return (0x000000);
-	rgb = (256 * clutter / pixel) * n * pixel / clutter / 10;
-	if (rgb > 255)
-		rgb = 255;
-	return (0x000000 + (rgb * pow(16, 4)));
+	rgb = 512 / (pixel / clutter) * n;
+	if (rgb < 256)
+		return (0x000000 + rgb * pow(16, 4));
+	if (rgb >= 256 && rgb < 512)
+		return (0xFF0000 + (rgb - 256) * pow(16, 2));
+	return (0x000000);
 }
 
 static void	put(t_vars *vars, double size)

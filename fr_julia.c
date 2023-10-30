@@ -6,7 +6,7 @@
 /*   By: yushsato <yushsato@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 22:29:45 by yushsato          #+#    #+#             */
-/*   Updated: 2023/10/30 17:28:47 by yushsato         ###   ########.fr       */
+/*   Updated: 2023/10/30 18:43:35 by yushsato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,21 +22,19 @@ static int	put_color(t_complex com, int pixel)
 
 	ft_bzero(&calc, sizeof(t_complex));
 	n = 0;
-	calc.real = 0;
-	calc.imag = 0.8;
+	calc.real = 0.285;
+	calc.imag = 0.01;
 	while (pow(com.real, 2) + pow(com.imag, 2) <= 4 && n < pixel / clutter)
 	{
 		complex_mul(&com, &com);
 		complex_add(&com, &calc);
 		n++;
 	}
-	if (n == pixel / clutter)
-		return (0x000000);
-	rgb = (256 * clutter / pixel) * n * pixel / clutter / 10;
+	rgb = 512 / (pixel / clutter) * n;
 	if (rgb < 256)
-		return (0x000000 + (rgb * pow(16, 4)));
-	if (rgb >= 256 && rgb < 511)
-		return (0xFF0000 + ((rgb - 255) * pow(16, 2)));
+		return (0x000000 + rgb * pow(16, 4));
+	if (rgb >= 256 && rgb < 512)
+		return (0xFF0000 + (rgb - 256) * pow(16, 2));
 	return (0x000000);
 }
 
