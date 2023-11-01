@@ -6,7 +6,7 @@
 /*   By: yushsato <yushsato@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 22:29:45 by yushsato          #+#    #+#             */
-/*   Updated: 2023/10/30 18:51:24 by yushsato         ###   ########.fr       */
+/*   Updated: 2023/11/01 15:00:48 by yushsato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,9 @@ static int	mouse_hook(int key_code, int x, int y, t_vars *vars)
 	(void)x;
 	(void)y;
 	if (4 == key_code)
-		scale += 0.1;
+		scale *= 1.1;
 	if (5 == key_code)
-		scale -= 0.1;
+		scale *= 0.9;
 	put(vars, scale);
 	return (0);
 }

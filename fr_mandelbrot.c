@@ -6,7 +6,7 @@
 /*   By: yushsato <yushsato@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 18:50:40 by yushsato          #+#    #+#             */
-/*   Updated: 2023/10/30 18:50:14 by yushsato         ###   ########.fr       */
+/*   Updated: 2023/11/01 15:00:32 by yushsato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 static int	put_color(t_complex com, int pixel)
 {
-	const int	clutter = 2;
+	const int	clutter = 13;
 	t_complex	calc;
 	int			n;
 	int			rgb;
@@ -68,9 +68,9 @@ static int	mouse_hook(int key_code, int x, int y, t_vars *vars)
 	(void)x;
 	(void)y;
 	if (4 == key_code)
-		scale += 0.1;
+		scale *= 1.1;
 	if (5 == key_code)
-		scale -= 0.1;
+		scale *= 0.9;
 	put(vars, scale);
 	return (0);
 }
