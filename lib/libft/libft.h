@@ -6,14 +6,13 @@
 /*   By: yushsato <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 15:54:04 by yushsato          #+#    #+#             */
-/*   Updated: 2023/11/01 19:16:19 by yushsato         ###   ########.fr       */
+/*   Updated: 2023/11/01 20:56:47 by yushsato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 # include <stddef.h>
-
 
 double	ft_atod(const char *a);
 int		ft_atoi(const char *str);

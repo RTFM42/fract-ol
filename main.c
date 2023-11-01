@@ -6,7 +6,7 @@
 /*   By: yushsato <yushsato@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 17:36:57 by yushsato          #+#    #+#             */
-/*   Updated: 2023/11/01 19:24:37 by yushsato         ###   ########.fr       */
+/*   Updated: 2023/11/01 20:56:32 by yushsato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 
 int	main(int argc, char **argv)
 {
-	double opt1;
-	double opt2;
+	double	opt1;
+	double	opt2;
 
 	if (argc == 2 && (!ft_memcmp("mandelbrot", argv[1], 11)
 			|| !ft_memcmp("m", argv[1], 2)))

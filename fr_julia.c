@@ -6,7 +6,7 @@
 /*   By: yushsato <yushsato@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 22:29:45 by yushsato          #+#    #+#             */
-/*   Updated: 2023/11/01 20:17:52 by yushsato         ###   ########.fr       */
+/*   Updated: 2023/11/01 20:55:19 by yushsato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 static int	put_color(t_complex com, int pixel, double real, double imag)
 {
-	const int	clutter = 2;
+	const int	clutter = 4;
 	t_complex	calc;
 	int			n;
 	int			rgb;
@@ -30,11 +30,13 @@ static int	put_color(t_complex com, int pixel, double real, double imag)
 		complex_add(&com, &calc);
 		n++;
 	}
-	rgb = 512 / (pixel / clutter) * n;
+	rgb = 786 / (pixel / clutter) * n;
 	if (rgb < 256)
 		return (0x000000 + rgb * pow(16, 4));
 	if (rgb >= 256 && rgb < 512)
 		return (0xFF0000 + (rgb - 256) * pow(16, 2));
+	if (rgb >= 512 && rgb < 786)
+		return (0xFFFF00 + (rgb - 512));
 	return (0x000000);
 }
 
@@ -75,18 +77,18 @@ static int	mouse_hook(int key_code, int x, int y, t_vars *vars)
 	return (0);
 }
 
-void	fr_julia(double real, double imag)
+void	fr_julia(double a, double b)
 {
 	t_vars	vars;
 	t_data	img;
 
-	vars.j_real = real;
-	vars.j_imag = imag;
+	vars.j_real = a;
+	vars.j_imag = b;
 	vars.mlx = mlx_init();
 	vars.pixel = 500;
 	vars.img = &img;
 	vars.window = mlx_new_window(vars.mlx, vars.pixel, vars.pixel,
-			"fractol-mandelbrot");
+			"fractol-julia");
 	img.img = mlx_new_image(vars.mlx, vars.pixel, vars.pixel);
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
 			&img.endian);

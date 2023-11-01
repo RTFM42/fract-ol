@@ -6,7 +6,7 @@
 /*   By: yushsato <yushsato@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 19:43:07 by yushsato          #+#    #+#             */
-/*   Updated: 2023/11/01 19:24:21 by yushsato         ###   ########.fr       */
+/*   Updated: 2023/11/01 20:54:40 by yushsato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ t_complex	*complex_add(t_complex *dst, t_complex *effect);
 t_complex	*complex_sub(t_complex *dst, t_complex *effect);
 void		fr_mlx_pixel_put(t_data *img, int x, int y, unsigned int color);
 void		fr_mandelbrot(void);
-void		fr_julia(double real, double imag);
+void		fr_julia(double a, double b);
 int			fr_exit_wind(int keycode, t_vars *vars);
 int			fr_exit(int e_code);
 
