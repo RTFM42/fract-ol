@@ -6,7 +6,7 @@
 /*   By: yushsato <yushsato@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 17:36:57 by yushsato          #+#    #+#             */
-/*   Updated: 2023/10/16 15:06:45 by yushsato         ###   ########.fr       */
+/*   Updated: 2023/11/01 19:24:37 by yushsato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,19 @@
 
 int	main(int argc, char **argv)
 {
+	double opt1;
+	double opt2;
+
 	if (argc == 2 && (!ft_memcmp("mandelbrot", argv[1], 11)
 			|| !ft_memcmp("m", argv[1], 2)))
 		fr_mandelbrot();
-	else if (argc == 2 && (!ft_memcmp("julia", argv[1], 6)
+	else if (argc == 4 && (!ft_memcmp("julia", argv[1], 6)
 			|| !ft_memcmp("j", argv[1], 2)))
-		fr_julia();
+	{
+		opt1 = ft_atod(argv[2]);
+		opt2 = ft_atod(argv[3]);
+		fr_julia(opt1, opt2);
+	}
 	else
 	{
 		ft_printf("Illigal Option\n");

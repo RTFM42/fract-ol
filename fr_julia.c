@@ -6,14 +6,14 @@
 /*   By: yushsato <yushsato@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 22:29:45 by yushsato          #+#    #+#             */
-/*   Updated: 2023/11/01 15:00:48 by yushsato         ###   ########.fr       */
+/*   Updated: 2023/11/01 20:17:52 by yushsato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 #include <stdio.h>
 
-static int	put_color(t_complex com, int pixel)
+static int	put_color(t_complex com, int pixel, double real, double imag)
 {
 	const int	clutter = 2;
 	t_complex	calc;
@@ -22,8 +22,8 @@ static int	put_color(t_complex com, int pixel)
 
 	ft_bzero(&calc, sizeof(t_complex));
 	n = 0;
-	calc.real = 0.285;
-	calc.imag = 0.01;
+	calc.real = real;
+	calc.imag = imag;
 	while (pow(com.real, 2) + pow(com.imag, 2) <= 4 && n < pixel / clutter)
 	{
 		complex_mul(&com, &com);
@@ -52,7 +52,7 @@ static void	put(t_vars *vars, double size)
 		while (pos[1] < vars->pixel)
 		{
 			com.imag = (-2.0 + 4.0 / vars->pixel * pos[1]) / size;
-			color = put_color(com, vars->pixel);
+			color = put_color(com, vars->pixel, vars->j_real, vars->j_imag);
 			fr_mlx_pixel_put(vars->img, pos[0], pos[1], color);
 			pos[1]++;
 		}
@@ -75,11 +75,13 @@ static int	mouse_hook(int key_code, int x, int y, t_vars *vars)
 	return (0);
 }
 
-void	fr_julia(void)
+void	fr_julia(double real, double imag)
 {
 	t_vars	vars;
 	t_data	img;
 
+	vars.j_real = real;
+	vars.j_imag = imag;
 	vars.mlx = mlx_init();
 	vars.pixel = 500;
 	vars.img = &img;
