@@ -19,6 +19,7 @@
 # Libraries
 *.lib
 *.a
+*.o
 *.la
 *.lo
 
@@ -60,3 +61,5 @@ test.c
 
 # tar file
 *.tgz
+
+/fractol
