@@ -6,7 +6,7 @@
 /*   By: yushsato <yushsato@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 22:29:45 by yushsato          #+#    #+#             */
-/*   Updated: 2023/11/01 20:55:19 by yushsato         ###   ########.fr       */
+/*   Updated: 2023/11/01 21:06:43 by yushsato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,8 @@ void	fr_julia(double a, double b)
 	t_vars	vars;
 	t_data	img;
 
+	printf("%.16f\n", a);
+	printf("%.16f\n", b);
 	vars.j_real = a;
 	vars.j_imag = b;
 	vars.mlx = mlx_init();

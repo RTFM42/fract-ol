@@ -6,7 +6,7 @@
 /*   By: yushsato <yushsato@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 17:36:57 by yushsato          #+#    #+#             */
-/*   Updated: 2023/11/01 21:00:04 by yushsato         ###   ########.fr       */
+/*   Updated: 2023/11/01 21:01:41 by yushsato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ int	main(int argc, char **argv)
 	}
 	else
 	{
-		ft_printf("Illigal Option\nUsage:\n\t%s [mandelbrot | m]\n
-				\t%s [julia | j] (number) (number)\n", argv[0], argv[0]);
+		ft_printf("Illigal Option\nUsage:\n\t%s [mandelbrot | m]\n", argv[0]);
+		ft_printf("\t%s [julia | j] (number) (number)\n", argv[0]);
 		return (1);
 	}
 	return (0);
