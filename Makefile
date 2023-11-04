@@ -6,13 +6,13 @@
 #    By: yushsato <yushsato@student.42tokyo.jp>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/07 10:00:38 by yushsato          #+#    #+#              #
-#    Updated: 2023/11/02 18:49:31 by yushsato         ###   ########.fr        #
+#    Updated: 2023/11/04 19:27:52 by yushsato         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= fractol
 CC		= gcc
-CFLAGS	= -Wall -Wextra -Werror # -g -fsanitize=address
+CFLAGS	= -Wall -Wextra -Werror -g -fsanitize=address
 SRCS	= main.c \
 		  complex.c \
 		  fr_hook.c \

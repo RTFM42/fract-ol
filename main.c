@@ -6,7 +6,7 @@
 /*   By: yushsato <yushsato@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 17:36:57 by yushsato          #+#    #+#             */
-/*   Updated: 2023/11/01 21:01:41 by yushsato         ###   ########.fr       */
+/*   Updated: 2023/11/04 19:35:09 by yushsato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,48 @@
 #include <libc.h>
 #include "fractol.h"
 #include "lib/libft/libft.h"
+
+static int	is_num(char *s)
+{
+	if (s == NULL)
+		return (0);
+	while (*s)
+	{
+		if ('0' <= *s && *s <= '9')
+			;
+		else
+			return (0);
+		s++;
+	}
+	return (1);
+}
+
+static int	is_double(char *s)
+{
+	char	**opts;
+	int		ret;
+	int		n;
+
+	if (*s == '-')
+		s++;
+	opts = ft_split(s, '.');
+	ret = 0;
+	n = 0;
+	if (opts[0] != NULL && is_num(opts[0]))
+	{
+		if (opts[1] == NULL && opts[0][0] != '0')
+			ret = 1;
+		else if (opts[0][0] == '0' && opts[0][1] == '\0'
+				&& is_num(opts[1]) && opts[2] == NULL)
+			ret = 1;
+		else if (opts[0][0] != '0' && is_num(opts[1]) && opts[2] == NULL)
+			ret = 1;
+	}
+	while (opts[n] != NULL)
+		free(opts[n++]);
+	free(opts);
+	return (ret);
+}
 
 int	main(int argc, char **argv)
 {
@@ -25,7 +67,8 @@ int	main(int argc, char **argv)
 			|| !ft_memcmp("m", argv[1], 2)))
 		fr_mandelbrot();
 	else if (argc == 4 && (!ft_memcmp("julia", argv[1], 6)
-			|| !ft_memcmp("j", argv[1], 2)))
+			|| !ft_memcmp("j", argv[1], 2))
+		&& is_double(argv[2]) && is_double(argv[3]))
 	{
 		opt1 = ft_atod(argv[2]);
 		opt2 = ft_atod(argv[3]);
