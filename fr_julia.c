@@ -6,7 +6,7 @@
 /*   By: yushsato <yushsato@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/15 22:29:45 by yushsato          #+#    #+#             */
-/*   Updated: 2023/11/01 21:06:43 by yushsato         ###   ########.fr       */
+/*   Updated: 2023/11/04 18:13:27 by yushsato         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static void	put(t_vars *vars, double size)
 	while (pos[0] < vars->pixel)
 	{
 		pos[1] = 0;
-		com.real = (-2.0 + 4.0 / vars->pixel * pos[0]) / size;
+		com.real = (-2.0 + 4.0 / vars->pixel * (vars->pixel - pos[0])) / size;
 		while (pos[1] < vars->pixel)
 		{
 			com.imag = (-2.0 + 4.0 / vars->pixel * pos[1]) / size;
@@ -82,8 +82,6 @@ void	fr_julia(double a, double b)
 	t_vars	vars;
 	t_data	img;
 
-	printf("%.16f\n", a);
-	printf("%.16f\n", b);
 	vars.j_real = a;
 	vars.j_imag = b;
 	vars.mlx = mlx_init();
